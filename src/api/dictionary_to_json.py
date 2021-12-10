@@ -8,8 +8,9 @@ with open('signatures.txt', 'r') as file:
     for i in data:
         signature, extension = i.split(' - ')
         signature = signature.strip()
+        extension = extension.lower()
         ext_dict.setdefault(extension, []).append(signature)
-        sig_dict[signature] = extension
+        sig_dict.setdefault(signature, []).append(extension)
 
 
 def dict_to_file(filename: str, dictionary: dict, clear_file=False) -> None:
