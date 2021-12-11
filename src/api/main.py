@@ -1,5 +1,6 @@
 import json
 import shutil
+import uvicorn
 from typing import List
 from pathlib import Path
 from uuid import uuid4
@@ -63,3 +64,6 @@ async def upload(files: List[UploadFile] = File(...)):
     
     return json.loads(output)
 ###
+
+if __name__ == '__main__':
+    uvicorn.run(app, port=8000, host='0.0.0.0')
