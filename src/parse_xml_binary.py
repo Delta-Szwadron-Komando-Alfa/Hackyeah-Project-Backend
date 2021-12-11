@@ -2,7 +2,7 @@ import base64
 from lxml import etree
 
 
-def parse_xml_binary(xml_file):
+def parse_xml_binary(xml_file, file_name='file.zip'):
     xml_doc = etree.parse(xml_file)
     nsmap = {}
     for ns in xml_doc.xpath('//namespace::*'):
@@ -12,10 +12,7 @@ def parse_xml_binary(xml_file):
     element = xml_doc.xpath('//str:DaneZalacznika', namespaces=nsmap)[0].text
     decoded_element = base64.b64decode(element)
 
-    with open('plik.zip', 'wb') as file:
+    with open(file_name, 'wb') as file:
         file.truncate(0)
         file.write(decoded_element)
         return file
-
-
-print(type(parse_xml_binary('./test_xml_with_binary.xml')))
