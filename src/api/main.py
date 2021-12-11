@@ -5,6 +5,7 @@ from pathlib import Path
 from uuid import uuid4
 
 from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import RedirectResponse
 
 from droid.droid_handler import Client
 
@@ -22,8 +23,9 @@ with open('extensions.json', 'r') as file:
 
 @app.get('/')
 async def root():
-    return {'message': 'Hello World'}
+    return RedirectResponse('/docs')
 
+# Extensions
 @app.get('/extensions')
 async def get_all_signatures():
     return ext_dict
@@ -33,7 +35,9 @@ async def get_signature(extension):
     extension = extension.lower()
     signature = ext_dict.get(extension.lower())
     return {extension: signature}
+###
 
+# Signatures
 @app.get('/signatures')
 async def get_all_extensions():
     return sig_dict
@@ -42,7 +46,9 @@ async def get_all_extensions():
 async def get_extension(signature):
     extension = sig_dict.get(signature)
     return {signature: extension}
+###
 
+# Files format
 @app.post('/upload')
 async def upload(files: List[UploadFile] = File(...)):
     random_path = f'temp/{uuid4().hex}'
@@ -56,3 +62,4 @@ async def upload(files: List[UploadFile] = File(...)):
     shutil.rmtree(random_path)
     
     return json.loads(output)
+###
