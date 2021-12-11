@@ -32,26 +32,26 @@ class FileIdentificator:
 
     def indentify_files(self, folder_name: str) -> str:
 
-        full_path = os.getcwd() + "\\" + folder_name
-        process_output = subprocess.run(["java", "-jar", "droid-command-line-6.5.jar", "-Nr", full_path, "-Ns", self.file_syg], capture_output=True)
+        full_path = os.getcwd() + "/" + folder_name
+        process_output = subprocess.run(["java", "-jar", "droid/droid-command-line-6.5.jar", "-Nr", full_path, "-Ns", self.file_syg], capture_output=True)
         formated_output = process_output.stdout.decode("utf-8")
 
         files_with_ext = {}
-        for line in formated_output.split("\r\n")[9:]:
+        for line in formated_output.split('\n')[9:]:
             try:
                 file_name, puid = line.split(",")
                 desc, file_exts = self.formatDict.get(puid)
-                files_with_ext[file_name.split("\\")[-1]] = (desc, file_exts)
+                files_with_ext[file_name.split("/")[-1]] = (desc, file_exts)
 
             except ValueError:
                 pass
 
             except TypeError:
                 if puid == "Unknown":
-                    files_with_ext[file_name.split("\\")[-1]] = (puid, [])
+                    files_with_ext[file_name.split("/")[-1]] = (puid, [])
 
         return json.dumps(files_with_ext)
 
 
-Client = FileIdentificator("DROID_SignatureFile_V99.xml")
-print(Client.indentify_files("dla_uczestnikow"))
+Client = FileIdentificator("droid/DROID_SignatureFile_V99.xml")
+#print(Client.indentify_files("dla_uczestnikow"))
