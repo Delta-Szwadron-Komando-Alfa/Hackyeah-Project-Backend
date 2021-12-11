@@ -45465,6 +45465,7 @@
         <FileFormat ID="910" Name="Microsoft Office Open XML"
             PUID="fmt/189" Version="2007 onwards">
             <InternalSignatureID>258</InternalSignatureID>
+			<Extension>docx</Extension>
             <HasPriorityOverFileFormatID>382</HasPriorityOverFileFormatID>
         </FileFormat>
         <FileFormat ID="912" MIMEType="application/vnd.framemaker"

@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: api
+    command: python3 main.py
+    ports:
+      - "8000:8000"
