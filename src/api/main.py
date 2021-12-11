@@ -1,5 +1,12 @@
 import json
-from fastapi import FastAPI
+import shutil
+from typing import List
+from pathlib import Path
+from uuid import uuid4
+
+from fastapi import FastAPI, File, UploadFile
+
+from droid.droid_handler import Client
 
 app = FastAPI()
 
@@ -35,3 +42,17 @@ async def get_all_extensions():
 async def get_extension(signature):
     extension = sig_dict.get(signature)
     return {signature: extension}
+
+@app.post('/upload')
+async def upload(files: List[UploadFile] = File(...)):
+    random_path = f'temp/{uuid4().hex}'
+    Path(random_path).mkdir(parents=True, exist_ok=True)
+
+    for file in files:
+        with open(f'{random_path}/{file.filename}', 'wb+') as file_object:
+            file_object.write(file.file.read())
+
+    output = Client.indentify_files(f'{random_path}')
+    shutil.rmtree(random_path)
+    
+    return json.loads(output)
