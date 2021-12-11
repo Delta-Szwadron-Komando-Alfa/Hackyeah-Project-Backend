@@ -32,6 +32,7 @@ importlib-metadata==4.8.1
 incremental==21.3.0
 libmsym==0.2.4
 lit==13.0.0.dev0
+lxml==4.6.4
 Markdown==3.3.6
 more-itertools==8.10.0
 msgpack==1.0.2
