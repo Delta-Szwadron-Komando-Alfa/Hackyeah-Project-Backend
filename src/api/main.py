@@ -13,6 +13,7 @@ from starlette.middleware import Middleware
 from starlette.middleware.cors import CORSMiddleware
 
 from droid.droid_handler import Client
+from parse_xml_binary import parse_xml_binary
 from validate_xml import validate_xml_with_xsd
 
 middleware = [Middleware(
@@ -75,6 +76,19 @@ async def validate(file: UploadFile = File(...)):
         return {file.filename: resp}
 
     return {file.filename: 'No schema to validate'}
+
+# Binary
+@app.post('/binary')
+async def binary(file: UploadFile = File(...)):
+    random_path = f'temp/{uuid4().hex}'
+    Path(random_path).mkdir(parents=True, exist_ok=True)
+
+    filepath = f'{random_path}/file.xml' 
+
+    with open(filepath, 'wb+') as file_object:
+        file_object.write(file.file.read())
+    
+    return parse_xml_binary(filepath)
 
 if __name__ == '__main__':
     uvicorn.run(app, port=8000, host='0.0.0.0')

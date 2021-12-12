@@ -3,6 +3,7 @@ from lxml import etree
 
 
 def parse_xml_binary(xml_file):
+    result = {}
     xml_doc = etree.parse(xml_file)
     nsmap = {}
     for ns in xml_doc.xpath('//namespace::*'):
@@ -15,9 +16,13 @@ def parse_xml_binary(xml_file):
     for attach in xml_doc.xpath('//str:Zalaczniki', namespaces=nsmap)[0]:
         it = attach.iter()
         file_name = next(it).attrib.get('nazwaPliku')
-        data = next(it).text
-        decoded_data = base64.b64decode(data)
+        
+        result[file_name] = next(it).text
+        
+    return result
 
-        with open(file_name, 'wb') as file:
-            file.truncate(0)
-            file.write(decoded_data)
+        #decoded_data = base64.b64decode(data)
+
+        #with open(file_name, 'wb') as file:
+            #file.truncate(0)
+            #file.write(decoded_data)
