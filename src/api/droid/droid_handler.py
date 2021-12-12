@@ -4,6 +4,17 @@ import xml.etree.ElementTree as ET
 import json
 
 class FileIdentificator:
+    """
+    Class used for identification of a file formats using DROID technology.
+
+    Given a file hex signatures map returns a client to identify file formats given a files.
+
+    Method(s): 
+
+    * indentify_files(self, folder_name) - runs DROID analisis on a folder with selected files.
+        and returns a json dictionary with suggested file format and extenstion.
+    
+    """
     def __init__(self, file_syg) -> None:
         self.file_syg = file_syg
         self.extenstionTag = "{http://www.nationalarchives.gov.uk/pronom/SignatureFile}Extension"
