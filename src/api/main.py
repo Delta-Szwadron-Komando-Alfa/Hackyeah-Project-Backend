@@ -1,4 +1,5 @@
 import json
+from mmap import ALLOCATIONGRANULARITY
 import shutil
 import uvicorn
 from typing import List
@@ -7,10 +8,23 @@ from uuid import uuid4
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from droid.droid_handler import Client
 
 app = FastAPI()
+
+origins = [
+    '*'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_method=['*'],
+    allow_headers=['*']
+)
 
 sig_dict = {}
 ext_dict = {}
