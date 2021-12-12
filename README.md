@@ -1,9 +1,10 @@
-# Hackyeah Project
+# API
+---
+* /upload `POST`<br />
+Request body should contain **KEY 'files'** with the value of the files sent to get the types of them
 
-#
+* /validate `POST`<br />
+Request body should contain **KEY 'file'** with the value of the file sent to validate if it complies with schema specified inside of it
 
-> None of us has any clue what we'll be building
-> but we can be sure of one thing
-> it will suck
-
-## "I agree with violence" - one of our devs
+* /binary `POST`<br />
+Request body should contain **KEY 'file'** with the value of the file sent to extract binary files from it
